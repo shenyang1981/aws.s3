@@ -283,7 +283,10 @@ function(bucketname,
         }
         accelerate <- FALSE
         dualstack <- FALSE
-        if (!is.null(region) && region != "") {
+        if (!is.null(region) && grepl("^cn-", region)){
+            base_url <- gsub(".*(amazon.*)$", "\\1", base_url)
+            base_url <- paste0("s3.", region, ".", base_url)
+        } else if (!is.null(region) && region != "") {
             base_url <- paste0(region, ".", base_url)
         }
     } else {
